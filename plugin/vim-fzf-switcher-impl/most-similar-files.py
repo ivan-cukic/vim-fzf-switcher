@@ -4,8 +4,14 @@ import sys
 from heapq import heappush, heappushpop, nsmallest
 import Levenshtein
 import subprocess
+import os
+
 
 askingFor = sys.argv[1]
+cwd = os.getcwd()
+
+if askingFor.startswith(cwd):
+    askingFor = askingFor[len(cwd)+1:]
 
 proc = subprocess.Popen(['fd'], stdout=subprocess.PIPE)
 
@@ -22,7 +28,5 @@ for item in nsmallest(20, map(calcDist, input)):
     if firstDistance == -1:
         firstDistance = dist
     else:
-        if dist - firstDistance < 5:
-            print(fileName)
-
+        print(fileName)
 
